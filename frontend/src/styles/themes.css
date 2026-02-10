@@ -1,0 +1,147 @@
+/* ============================================================
+   Project Delivery — Design Tokens
+   ============================================================
+   All design tokens live here as CSS custom properties.
+   Tailwind v4's @theme directive registers them as utilities.
+   ============================================================
+   Palette: Vivid Violet primary · Electric Cyan accent
+            Warm Stone neutrals · Contemporary status colors
+   ============================================================ */
+
+/* === Base tokens (light theme — default) === */
+@theme {
+  /* Typography */
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+
+  /* ── Core surfaces — warm off-white ── */
+  --color-background: oklch(0.98 0.003 75);
+  --color-foreground: oklch(0.16 0.015 280);
+
+  /* ── Primary — Vivid Violet ── */
+  --color-primary: oklch(0.55 0.27 280);
+  --color-primary-foreground: oklch(0.99 0 0);
+
+  /* ── Secondary — Warm Stone ── */
+  --color-secondary: oklch(0.94 0.008 75);
+  --color-secondary-foreground: oklch(0.28 0.015 75);
+
+  /* ── Accent — Electric Cyan ── */
+  --color-accent: oklch(0.72 0.16 195);
+  --color-accent-foreground: oklch(0.12 0.03 195);
+
+  /* ── Muted — Soft warm gray ── */
+  --color-muted: oklch(0.94 0.006 75);
+  --color-muted-foreground: oklch(0.5 0.01 75);
+
+  /* ── Status: Destructive — Punch Red ── */
+  --color-destructive: oklch(0.58 0.24 18);
+  --color-destructive-foreground: oklch(0.99 0 0);
+
+  /* ── Status: Success — Emerald ── */
+  --color-success: oklch(0.65 0.2 155);
+  --color-success-foreground: oklch(0.99 0 0);
+
+  /* ── Status: Warning — Marigold ── */
+  --color-warning: oklch(0.82 0.17 80);
+  --color-warning-foreground: oklch(0.2 0.06 80);
+
+  /* ── Chrome ── */
+  --color-border: oklch(0.91 0.005 75);
+  --color-input: oklch(0.91 0.005 75);
+  --color-ring: oklch(0.55 0.27 280);
+
+  /* ── Cards & Popovers ── */
+  --color-card: oklch(0.995 0.002 75);
+  --color-card-foreground: oklch(0.16 0.015 280);
+
+  --color-popover: oklch(0.995 0.002 75);
+  --color-popover-foreground: oklch(0.16 0.015 280);
+
+  /* ── Sidebar ── */
+  --color-sidebar: oklch(0.96 0.006 280);
+  --color-sidebar-foreground: oklch(0.28 0.02 280);
+  --color-sidebar-accent: oklch(0.92 0.015 280);
+  --color-sidebar-border: oklch(0.9 0.008 280);
+
+  /* ── Radii ── */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-2xl: 1rem;
+  --radius-full: 9999px;
+
+  /* ── Shadows — tinted violet for depth ── */
+  --shadow-sm: 0 1px 2px oklch(0.3 0.05 280 / 0.06);
+  --shadow-md:
+    0 4px 6px -1px oklch(0.3 0.05 280 / 0.08),
+    0 2px 4px -2px oklch(0.3 0.05 280 / 0.06);
+  --shadow-lg:
+    0 10px 15px -3px oklch(0.3 0.05 280 / 0.1),
+    0 4px 6px -4px oklch(0.3 0.05 280 / 0.08);
+  --shadow-xl:
+    0 20px 25px -5px oklch(0.3 0.05 280 / 0.12),
+    0 8px 10px -6px oklch(0.3 0.05 280 / 0.1);
+}
+
+/* === Dark theme overrides === */
+.dark {
+  /* ── Core surfaces — ink black with violet undertone ── */
+  --color-background: oklch(0.11 0.02 280);
+  --color-foreground: oklch(0.93 0.006 75);
+
+  /* ── Primary — Luminous Violet ── */
+  --color-primary: oklch(0.68 0.28 280);
+  --color-primary-foreground: oklch(0.1 0.02 280);
+
+  /* ── Secondary — Dark Stone ── */
+  --color-secondary: oklch(0.2 0.012 280);
+  --color-secondary-foreground: oklch(0.9 0.006 75);
+
+  /* ── Accent — Bright Cyan ── */
+  --color-accent: oklch(0.78 0.15 195);
+  --color-accent-foreground: oklch(0.1 0.02 195);
+
+  /* ── Muted ── */
+  --color-muted: oklch(0.19 0.015 280);
+  --color-muted-foreground: oklch(0.62 0.01 75);
+
+  /* ── Status: Destructive — Hot Coral ── */
+  --color-destructive: oklch(0.65 0.24 18);
+  --color-destructive-foreground: oklch(0.95 0.005 18);
+
+  /* ── Status: Success — Neon Emerald ── */
+  --color-success: oklch(0.72 0.2 155);
+  --color-success-foreground: oklch(0.1 0.02 155);
+
+  /* ── Status: Warning — Bright Marigold ── */
+  --color-warning: oklch(0.84 0.17 80);
+  --color-warning-foreground: oklch(0.15 0.06 80);
+
+  /* ── Chrome ── */
+  --color-border: oklch(0.24 0.018 280);
+  --color-input: oklch(0.24 0.018 280);
+  --color-ring: oklch(0.68 0.28 280);
+
+  /* ── Cards & Popovers — raised surface ── */
+  --color-card: oklch(0.15 0.02 280);
+  --color-card-foreground: oklch(0.93 0.006 75);
+
+  --color-popover: oklch(0.15 0.02 280);
+  --color-popover-foreground: oklch(0.93 0.006 75);
+
+  /* ── Sidebar ── */
+  --color-sidebar: oklch(0.12 0.022 280);
+  --color-sidebar-foreground: oklch(0.82 0.008 75);
+  --color-sidebar-accent: oklch(0.18 0.02 280);
+  --color-sidebar-border: oklch(0.24 0.018 280);
+
+  /* ── Shadows — deeper, cooler ── */
+  --shadow-sm: 0 1px 2px oklch(0 0 0 / 0.2);
+  --shadow-md:
+    0 4px 6px -1px oklch(0 0 0 / 0.3), 0 2px 4px -2px oklch(0 0 0 / 0.25);
+  --shadow-lg:
+    0 10px 15px -3px oklch(0 0 0 / 0.35), 0 4px 6px -4px oklch(0 0 0 / 0.3);
+  --shadow-xl:
+    0 20px 25px -5px oklch(0 0 0 / 0.4), 0 8px 10px -6px oklch(0 0 0 / 0.35);
+}
