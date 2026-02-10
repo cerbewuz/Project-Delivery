@@ -10,7 +10,12 @@ import {
   PrivacyPage,
   CookiePage,
 } from "../features/marketing";
-import { AuthLayout, LoginPage, RegisterPage } from "../features/auth";
+import {
+  AuthLayout,
+  LoginPage,
+  RegisterPage,
+  ForgotPasswordPage,
+} from "../features/auth";
 
 export default function App() {
   return (
@@ -32,6 +37,7 @@ export default function App() {
         <Route element={<AuthLayout />}>
           <Route path="login" element={<LoginPage />} />
           <Route path="register" element={<RegisterPage />} />
+          <Route path="forgot-password" element={<ForgotPasswordPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
