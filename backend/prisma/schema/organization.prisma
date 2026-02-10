@@ -1,0 +1,84 @@
+// ============================================================================
+// 1 — Organization & Identity Layer
+// ============================================================================
+
+model Organization {
+  id              String   @id @default(uuid())
+  name            String
+  brandingLogoUrl String?  @map("branding_logo_url")
+  brandingColors  Json?    @map("branding_colors")
+  timezone        String   @default("UTC")
+  locale          String   @default("en")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  users           User[]
+  clients         Client[]
+  projects        Project[]
+  activityLogs    ActivityLog[]
+  automationRules AutomationRule[]
+  auditExports    AuditExport[]
+
+  @@map("organizations")
+}
+
+model User {
+  id             String     @id @default(uuid())
+  organizationId String     @map("organization_id")
+  email          String     @unique
+  passwordHash   String     @map("password_hash")
+  fullName       String     @map("full_name")
+  avatarUrl      String?    @map("avatar_url")
+  status         UserStatus @default(active)
+  lastLoginAt    DateTime?  @map("last_login_at")
+  createdAt      DateTime   @default(now()) @map("created_at")
+  updatedAt      DateTime   @updatedAt @map("updated_at")
+
+  // Relations
+  organization      Organization       @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  userRoles          UserRole[]
+  clientUsers        ClientUser[]
+  projectUsers       ProjectUser[]
+  assignedTasks      Task[]             @relation("TaskAssignee")
+  timeEntries        TimeEntry[]
+  comments           Comment[]
+  notifications      Notification[]
+  activityLogs       ActivityLog[]
+  createdFiles       File[]             @relation("FileCreator")
+  uploadedVersions   FileVersion[]      @relation("VersionUploader")
+  approvalRequests   ApprovalRequest[]  @relation("ApprovalRequester")
+  approvalActions    ApprovalAction[]
+  requestedExports   AuditExport[]      @relation("ExportRequester")
+  generatedReports   Report[]           @relation("ReportGenerator")
+
+  @@index([organizationId])
+  @@index([email])
+  @@map("users")
+}
+
+model Role {
+  id          String   @id @default(uuid())
+  name        RoleName @unique
+  description String?
+
+  // Relations
+  userRoles UserRole[]
+
+  @@map("roles")
+}
+
+model UserRole {
+  id     String @id @default(uuid())
+  userId String @map("user_id")
+  roleId String @map("role_id")
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role Role @relation(fields: [roleId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, roleId])
+  @@index([userId])
+  @@index([roleId])
+  @@map("user_roles")
+}

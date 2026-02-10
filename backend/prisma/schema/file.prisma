@@ -1,0 +1,49 @@
+// ============================================================================
+// 5 — File & Versioning System
+// ============================================================================
+
+model File {
+  id               String   @id @default(uuid())
+  projectId        String   @map("project_id")
+  milestoneId      String?  @map("milestone_id")
+  taskId           String?  @map("task_id")
+  currentVersionId String?  @unique @map("current_version_id")
+  originalFilename String   @map("original_filename")
+  mimeType         String?  @map("mime_type")
+  createdBy        String   @map("created_by")
+  createdAt        DateTime @default(now()) @map("created_at")
+
+  // Relations
+  project          Project          @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  milestone        Milestone?       @relation(fields: [milestoneId], references: [id], onDelete: SetNull)
+  task             Task?            @relation(fields: [taskId], references: [id], onDelete: SetNull)
+  currentVersion   FileVersion?     @relation("CurrentVersion", fields: [currentVersionId], references: [id])
+  creator          User             @relation("FileCreator", fields: [createdBy], references: [id])
+  versions         FileVersion[]    @relation("FileVersions")
+  approvalRequests ApprovalRequest[]
+
+  @@index([projectId])
+  @@index([milestoneId])
+  @@index([taskId])
+  @@map("files")
+}
+
+model FileVersion {
+  id            String   @id @default(uuid())
+  fileId        String   @map("file_id")
+  storagePath   String   @map("storage_path")
+  versionNumber Int      @map("version_number")
+  fileSizeBytes BigInt?  @map("file_size_bytes")
+  changeNotes   String?  @map("change_notes")
+  uploadedBy    String   @map("uploaded_by")
+  uploadedAt    DateTime @default(now()) @map("uploaded_at")
+
+  // Relations
+  file           File      @relation("FileVersions", fields: [fileId], references: [id], onDelete: Cascade)
+  currentForFile File?     @relation("CurrentVersion")
+  uploader       User      @relation("VersionUploader", fields: [uploadedBy], references: [id])
+  comments       Comment[]
+
+  @@index([fileId])
+  @@map("file_versions")
+}

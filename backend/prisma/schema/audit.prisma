@@ -1,0 +1,21 @@
+// ============================================================================
+// 11 — Security & Compliance
+// ============================================================================
+
+model AuditExport {
+  id             String       @id @default(uuid())
+  organizationId String       @map("organization_id")
+  requestedBy    String       @map("requested_by")
+  exportType     String       @map("export_type")
+  status         ExportStatus @default(pending)
+  filePath       String?      @map("file_path")
+  createdAt      DateTime     @default(now()) @map("created_at")
+  completedAt    DateTime?    @map("completed_at")
+
+  // Relations
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  user         User         @relation("ExportRequester", fields: [requestedBy], references: [id])
+
+  @@index([organizationId])
+  @@map("audit_exports")
+}

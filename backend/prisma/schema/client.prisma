@@ -1,0 +1,35 @@
+// ============================================================================
+// 2 — Client Layer
+// ============================================================================
+
+model Client {
+  id             String   @id @default(uuid())
+  organizationId String   @map("organization_id")
+  name           String
+  contactEmail   String?  @map("contact_email")
+  contactPhone   String?  @map("contact_phone")
+  createdAt      DateTime @default(now()) @map("created_at")
+
+  // Relations
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  clientUsers  ClientUser[]
+  projects     Project[]
+
+  @@index([organizationId])
+  @@map("clients")
+}
+
+model ClientUser {
+  id       String @id @default(uuid())
+  clientId String @map("client_id")
+  userId   String @map("user_id")
+
+  // Relations
+  client Client @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([clientId, userId])
+  @@index([clientId])
+  @@index([userId])
+  @@map("client_users")
+}

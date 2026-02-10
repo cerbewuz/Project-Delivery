@@ -1,0 +1,33 @@
+// ============================================================================
+// 10 — Automation & Scheduling
+// ============================================================================
+
+model AutomationRule {
+  id             String   @id @default(uuid())
+  organizationId String   @map("organization_id")
+  name           String?
+  triggerEvent   String   @map("trigger_event")
+  condition      Json?
+  action         Json
+  isActive       Boolean  @default(true) @map("is_active")
+  createdAt      DateTime @default(now()) @map("created_at")
+
+  // Relations
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId])
+  @@index([isActive])
+  @@map("automation_rules")
+}
+
+model ScheduledJob {
+  id           String    @id @default(uuid())
+  jobType      JobType   @map("job_type")
+  description  String?
+  scheduleCron String    @map("schedule_cron")
+  isActive     Boolean   @default(true) @map("is_active")
+  lastRunAt    DateTime? @map("last_run_at")
+  nextRunAt    DateTime? @map("next_run_at")
+
+  @@map("scheduled_jobs")
+}

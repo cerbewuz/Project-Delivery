@@ -1,0 +1,14 @@
+// ============================================================================
+// Project Delivery — Prisma Base Configuration
+// This file contains the generator and datasource blocks.
+// All .prisma files in this directory are auto-merged by Prisma.
+// ============================================================================
+
+generator client {
+  provider = "prisma-client"
+  output   = "../../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}

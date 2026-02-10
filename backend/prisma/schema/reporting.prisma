@@ -1,0 +1,20 @@
+// ============================================================================
+// 8 — Reporting
+// ============================================================================
+
+model Report {
+  id          String     @id @default(uuid())
+  projectId   String     @map("project_id")
+  reportType  ReportType @map("report_type")
+  title       String?
+  filePath    String     @map("file_path")
+  generatedBy String?    @map("generated_by")
+  generatedAt DateTime   @default(now()) @map("generated_at")
+
+  // Relations
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  generator User?   @relation("ReportGenerator", fields: [generatedBy], references: [id])
+
+  @@index([projectId])
+  @@map("reports")
+}

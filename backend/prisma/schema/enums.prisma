@@ -1,0 +1,85 @@
+// ============================================================================
+// Shared Enums
+// ============================================================================
+
+enum UserStatus {
+  active
+  inactive
+}
+
+enum ProjectStatus {
+  active
+  paused
+  completed
+}
+
+enum MilestoneStatus {
+  not_started
+  in_progress
+  completed
+}
+
+enum TaskStatus {
+  open
+  in_progress
+  blocked
+  completed
+  reopened
+}
+
+enum TaskPriority {
+  low
+  medium
+  high
+  urgent
+}
+
+enum SubtaskStatus {
+  open
+  completed
+}
+
+enum ApprovalStatus {
+  pending
+  approved
+  changes_requested
+}
+
+enum ApprovalDecision {
+  approve
+  request_changes
+}
+
+enum ExternalSource {
+  toggl
+  clockify
+  manual
+}
+
+enum ReportType {
+  weekly
+  monthly
+  final
+  custom
+}
+
+enum JobType {
+  weekly_report
+  reminder
+  timesheet
+  cleanup
+}
+
+enum ExportStatus {
+  pending
+  processing
+  completed
+  failed
+}
+
+enum RoleName {
+  SuperAdmin
+  Admin
+  TeamMember
+  Client
+}

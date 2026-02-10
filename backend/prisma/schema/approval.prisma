@@ -1,0 +1,60 @@
+// ============================================================================
+// 6 — Review, Approval & Feedback
+// ============================================================================
+
+model ApprovalRequest {
+  id          String         @id @default(uuid())
+  fileId      String         @map("file_id")
+  requestedBy String         @map("requested_by")
+  status      ApprovalStatus @default(pending)
+  dueDate     DateTime?      @map("due_date") @db.Date
+  resolvedAt  DateTime?      @map("resolved_at")
+  createdAt   DateTime       @default(now()) @map("created_at")
+
+  // Relations
+  file    File             @relation(fields: [fileId], references: [id], onDelete: Cascade)
+  user    User             @relation("ApprovalRequester", fields: [requestedBy], references: [id])
+  actions ApprovalAction[]
+
+  @@index([fileId])
+  @@index([status])
+  @@map("approval_requests")
+}
+
+model ApprovalAction {
+  id                String           @id @default(uuid())
+  approvalRequestId String           @map("approval_request_id")
+  userId            String           @map("user_id")
+  decision          ApprovalDecision
+  comment           String?
+  createdAt         DateTime         @default(now()) @map("created_at")
+
+  // Relations
+  approvalRequest ApprovalRequest @relation(fields: [approvalRequestId], references: [id], onDelete: Cascade)
+  user            User            @relation(fields: [userId], references: [id])
+
+  @@index([approvalRequestId])
+  @@map("approval_actions")
+}
+
+model Comment {
+  id              String   @id @default(uuid())
+  userId          String   @map("user_id")
+  fileVersionId   String?  @map("file_version_id")
+  taskId          String?  @map("task_id")
+  parentCommentId String?  @map("parent_comment_id")
+  content         String
+  createdAt       DateTime @default(now()) @map("created_at")
+
+  // Relations
+  user          User         @relation(fields: [userId], references: [id])
+  fileVersion   FileVersion? @relation(fields: [fileVersionId], references: [id], onDelete: SetNull)
+  task          Task?        @relation(fields: [taskId], references: [id], onDelete: SetNull)
+  parentComment Comment?     @relation("CommentThread", fields: [parentCommentId], references: [id])
+  replies       Comment[]    @relation("CommentThread")
+
+  @@index([userId])
+  @@index([fileVersionId])
+  @@index([taskId])
+  @@map("comments")
+}
